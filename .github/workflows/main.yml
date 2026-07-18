@@ -1,12 +1,6 @@
-name: AI Bot Full
+name: AI Bot
 
-on:
-  push:
-  issues:
-    types: [opened]
-  pull_request:
-    types: [opened]
-  workflow_dispatch:
+on: [push]
 
 jobs:
   ai-bot:
@@ -22,8 +16,4 @@ jobs:
           python-version: "3.10"
 
       - name: Bot çalıştır
-        run: |
-          echo "🤖 AI BOT AKTİF"
-          echo "Event: ${{ github.event_name }}"
-          echo "Repo: ${{ github.repository }}"
-          echo "User: ${{ github.actor }}"
+        run: python bot.py
