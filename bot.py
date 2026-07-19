@@ -1,25 +1,22 @@
 import os
 import requests
-import json
 
 token = os.environ["GITHUB_TOKEN"]
-repo = os.environ["GITHUB_REPOSITORY"]
+issue_number = os.environ["ISSUE_NUMBER"]
+repo = os.environ["REPO"]
 
-# Issue numarasını al
-with open(os.environ["GITHUB_EVENT_PATH"]) as f:
-    event = json.load(f)
-
-issue_number = event["issue"]["number"]
-
-# Yorum at
 url = f"https://api.github.com/repos/{repo}/issues/{issue_number}/comments"
 
 headers = {
-    "Authorization": f"token {token}"
+    "Authorization": f"Bearer {token}",
+    "Accept": "application/vnd.github+json"
 }
 
 data = {
-    "body": "🤖 Selam! Ben otomatik botum 🚀"
+    "body": "🤖 Selam! %100 çalışan bot aktif 🚀"
 }
 
-requests.post(url, json=data, headers=headers)
+response = requests.post(url, headers=headers, json=data)
+
+print(response.status_code)
+print(response.text)
