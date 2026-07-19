@@ -1,11 +1,17 @@
 import os
 import requests
+import json
 
 token = os.environ["GITHUB_TOKEN"]
-
 repo = os.environ["GITHUB_REPOSITORY"]
-issue_number = os.environ["GITHUB_REF"].split("/")[-1]
 
+# Issue numarasını al
+with open(os.environ["GITHUB_EVENT_PATH"]) as f:
+    event = json.load(f)
+
+issue_number = event["issue"]["number"]
+
+# Yorum at
 url = f"https://api.github.com/repos/{repo}/issues/{issue_number}/comments"
 
 headers = {
@@ -13,7 +19,7 @@ headers = {
 }
 
 data = {
-    "body": "🤖 Merhaba! Ben otomatik AI botum. Issue'nu gördüm 🚀"
+    "body": "🤖 Selam! Ben otomatik botum 🚀"
 }
 
 requests.post(url, json=data, headers=headers)
