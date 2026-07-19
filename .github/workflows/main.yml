@@ -1,9 +1,11 @@
-name: AI Bot
+name: AI Comment Bot
 
-on: [push]
+on:
+  issues:
+    types: [opened]
 
 jobs:
-  ai-bot:
+  comment:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,4 +18,6 @@ jobs:
           python-version: "3.10"
 
       - name: Bot çalıştır
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python bot.py
